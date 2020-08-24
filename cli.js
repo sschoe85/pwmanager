@@ -5,6 +5,7 @@ async function getPasswords() {
   return pwFile;
 }
 
+
 const myPassword = [
   {
     type: "password",
@@ -20,8 +21,14 @@ const myPassword = [
 
 inquirer.prompt(myPassword).then(async (answers) => {
   if (answers.password === "123") {
-    const data = await getPasswords();
-    console.log(data);
+    try{
+    const passwordsJSON = await getPasswords();
+    const passwords = JSON.parse(passwordsJSON);
+    console.log("Your password is: " + passwords[answers.key]);
+    }
+    catch(error){
+      console.log(error);
+    }
   } else {
     console.log("wrong password");
   }
